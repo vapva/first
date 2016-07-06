@@ -5,8 +5,8 @@ import java.sql.*;
 import java.text.*;
 import java.util.Locale;
 
-import DbUtils.DbSingleton;
 import auxiliary.InputHelper;
+import DbUtils.DbSingleton;
 
 public class Start {
 	private static final String QR1 = "SELECT * FROM tblWaterParameters";
