@@ -1,0 +1,4 @@
+java.sql.Date dt=new java.sql.Date(2015,8,5);
+System.out.println(dt);
+
+
