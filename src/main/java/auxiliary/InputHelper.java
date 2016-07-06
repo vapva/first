@@ -2,6 +2,7 @@ package auxiliary;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.math.BigDecimal;
 import java.util.Date;
 
 public class InputHelper {
@@ -18,11 +19,14 @@ public class InputHelper {
 	}
 	
 	public static double getDoubleInput(String prompt) {
-		String input = InputHelper.getInput(prompt);
-		return Double.parseDouble(input);
+		return Double.parseDouble(InputHelper.getInput(prompt));
 	}
 	
-	public static java.sql.Date getSQLDate(String invitation) throws Exception {
+	public static BigDecimal getBigDecimalInput(String prompt) {
+		return BigDecimal.valueOf(getDoubleInput(prompt));
+	}
+	
+	public static java.sql.Date getSQLDate(String invitation) {
 		String temp;
 		StringBuilder sb=new StringBuilder(10);
 		//Year

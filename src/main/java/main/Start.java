@@ -2,10 +2,12 @@ package main;
 
 
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.sql.*;
 import java.text.*;
 import java.util.Locale;
 
+import beans.WaterParam;
 import auxiliary.InputHelper;
 import DbUtils.DbSingleton;
 
@@ -94,5 +96,31 @@ public class Start {
 				rs.close();
 			} catch (SQLException e) {}
 		}
+	}
+	
+	public static WaterParam getWaterParamByID(long i) {
+		final String QR="SELECT * FROM  tblWaterParameters WHERE ID=?";
+		ResultSet rs=null;
+		PreparedStatement stmt=null;
+		
+		try {
+			stmt=DbUtils.DbSingleton.getInstanse().getConnection().prepareStatement(QR,ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+			stmt.setLong(1, i);
+			rs=stmt.executeQuery();
+			rs.last();
+			rs.first();
+			if (rs.getRow()==1){
+				WaterParam wp=new WaterParam(i,
+						rs.getDate("pDate"/*, Date.class*/),
+						rs.getObject("ControlSerialNumber", String.class),
+						rs.getObject("ParameterValue", Double.class));
+				return wp;
+			}
+		} catch (Exception e) {
+			System.out.println("Nothing was retrieved");
+			e.printStackTrace();
+			return null;
+		}
+		return null;
 	}
 }
