@@ -12,7 +12,8 @@ public class InputHelper {
 		try{
 			return stdin.readLine();
 		}catch (Exception e){
-			return "Error: " +e.getMessage();
+			System.out.println("Erroneous input");
+			return "";
 		}
 	}
 	
@@ -20,43 +21,26 @@ public class InputHelper {
 		String input = InputHelper.getInput(prompt);
 		return Double.parseDouble(input);
 	}
-		public static java.sql.Date getSQLDate(String invitation) throws Exception {
-		System.out.println(invitation);
+	
+	public static java.sql.Date getSQLDate(String invitation) throws Exception {
+		String temp;
 		StringBuilder sb=new StringBuilder(10);
-		StringBuilder sbT=new StringBuilder(10);
-		char r=0;
 		//Year
-		System.out.print("Enter year: ");
-		do{
-			r=(char)System.in.read();
-			if (r!=0)sbT.append(r);
-		}
-		while (r!='\n');
-		sb.append((Integer.parseInt(sbT.toString().trim())));
+		temp="Enter year: ";
+		temp=InputHelper.getInput(temp);
+		sb.append((Integer.parseInt(temp.trim())));
 		sb.append('-');
 		
-		sbT.delete(0, sbT.length()-1);
-		r=0;
 		//Month	
-		System.out.print("Enter month: ");
-		do{
-			r=(char)System.in.read();
-			if (r!=0)sbT.append(r);
-		}
-		while (r!='\n');
-		sb.append((Integer.parseInt(sbT.toString().trim())));
+		temp="Enter month: ";
+		temp=InputHelper.getInput(temp);
+		sb.append((Integer.parseInt(temp.trim())));
 		sb.append('-');
 		
-		sbT.delete(0, sbT.length()-1);
-		r=0;
 		//Day
-		System.out.print("Enter day: ");
-		do{
-			r=(char)System.in.read();
-			if (r!=0)sbT.append(r);
-		}
-		while (r!='\n');
-		sb.append((Integer.parseInt(sbT.toString().trim())));
+		temp="Enter day: ";
+		temp=InputHelper.getInput(temp);
+		sb.append((Integer.parseInt(temp.trim())));
 		
 		System.out.println(sb.toString());
 		try {

@@ -26,6 +26,7 @@ public class DbSingleton {
 		if (conn==null){
 			try {
 				conn = DriverManager.getConnection(CONNECTION_STRING);
+				System.out.println("DB Connection is successful");
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
