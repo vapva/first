@@ -14,6 +14,7 @@ public class Start {
 
 	public Start() {
 		super();
+		System.out.println();
 	}
 
 	public static void runDB() {
