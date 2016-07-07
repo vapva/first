@@ -1,6 +1,8 @@
 package beans;
 
 import java.sql.Date;
+import java.text.DateFormat;
+import java.util.Calendar;
 
 public class WaterParam {
 	private long ID;
@@ -21,7 +23,7 @@ public class WaterParam {
 		return ID;
 	}
 
-	public void setID(int iD2) {
+	public void setID(long iD2) {
 		ID = iD2;
 	}
 	public Date getpDate() {
@@ -93,6 +95,7 @@ public class WaterParam {
 	 */
 	@Override
 	public boolean equals(Object obj) {
+		DateFormat df=DateFormat.getDateInstance();
 		if (this == obj) return true;
 		if (obj == null) return false;
 		if (!(obj instanceof WaterParam)) return false;
@@ -104,9 +107,11 @@ public class WaterParam {
 		if (ID != other.ID) return false;
 		if (Double.doubleToLongBits(ParameterValue) != Double
 				.doubleToLongBits(other.ParameterValue)) return false;
+		System.out.println(pDate.equals(other.pDate));
 		if (pDate == null) {
 			if (other.pDate != null) return false;
-		} else if (!pDate.equals(other.pDate)) return false;
+		} else if (!(df.format(pDate).equals(
+				df.format(other.pDate))))return false;
 		return true;
 	}
 
