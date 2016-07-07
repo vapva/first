@@ -40,7 +40,7 @@ public class Start {
 					e.getMessage() + "SQL State: " +e.getSQLState());
 		}
 	}	
-
+ 
 	public static void main(String[] args) {
 		System.out.println("Starting ..." + "\nQuerying first 100 records ...");
 		runDB();
