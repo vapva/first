@@ -2,7 +2,6 @@ package beans;
 
 import java.sql.Date;
 import java.text.DateFormat;
-import java.util.Calendar;
 
 public class WaterParam {
 	private long ID;
