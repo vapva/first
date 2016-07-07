@@ -107,7 +107,6 @@ public class WaterParam {
 		if (ID != other.ID) return false;
 		if (Double.doubleToLongBits(ParameterValue) != Double
 				.doubleToLongBits(other.ParameterValue)) return false;
-		System.out.println(pDate.equals(other.pDate));
 		if (pDate == null) {
 			if (other.pDate != null) return false;
 		} else if (!(df.format(pDate).equals(
