@@ -119,7 +119,44 @@ public class Start {
 			System.out.println("Nothing was retrieved");
 			e.printStackTrace();
 			return null;
+		}finally{
+			if (stmt!=null) try {
+				stmt.close();
+			} catch (SQLException e) {}
+			if (rs!=null) try {
+				rs.close();
+			} catch (SQLException e) {}
 		}
 		return null;
+	}
+	
+	public static boolean insertWaterParam(WaterParam obj) {
+		final String QR="INSERT INTO tblWaterParameters (pDate, ControlSerialNumber, ParameterValue)"
+				+ " VALUES (?,?,?)";
+		ResultSet rs=null;
+		PreparedStatement stmt=null;
+		if (obj==null || !(obj instanceof WaterParam)) return false;
+		try {
+			stmt=DbUtils.DbSingleton.getInstanse().getConnection().prepareStatement(QR, Statement.RETURN_GENERATED_KEYS);
+			stmt.setDate(1, obj.getpDate());
+			stmt.setString(2, obj.getControlSerialNumber());
+			stmt.setDouble(3, obj.getParameterValue());
+			if (stmt.executeUpdate()==0) return false;
+			rs=stmt.getGeneratedKeys();
+			rs.next();
+			obj.setID(rs.getInt(1));
+			return true;
+		} catch (Exception e) {
+			System.out.println("Operation failed");
+			e.printStackTrace();
+			return false;
+		}finally{
+			if (stmt!=null) try {
+				stmt.close();
+			} catch (SQLException e) {}
+			if (rs!=null) try {
+				rs.close();
+			} catch (SQLException e) {}
+		}
 	}
 }
