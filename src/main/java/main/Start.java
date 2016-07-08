@@ -20,21 +20,22 @@ public class Start {
 				ResultSet rs  = stmt.executeQuery(QR1);
 				){
 			rs.last();
-			System.out.println("Number of Rows: "+ rs.getRow());
+			System.out.println("Number of the last row: "+ rs.getRow());
 			rs.beforeFirst();
 			if (!(rs.getWarnings()==null)) System.out.println(rs.getWarnings().toString());
 			StringBuilder sb = new StringBuilder(100);
-			System.out.println(String.format("%-15s", "pDate")  +
+			if (rs.first())System.out.println(String.format("%-15s", "pDate")  +
 					String.format("%-25s",  "ControlSerialNumber") +
 					String.format("%-15s",   "ParameterValue"));
+			rs.beforeFirst();
 			while (rs.next()){
 				sb.append((String.format("%-15s", DateFormat.getDateInstance(DateFormat.MEDIUM,Locale.ENGLISH).format(rs.getObject("pDate", Date.class)))
-						+String.format("%-25s",rs.getObject("ControlSerialNumber", String.class)
-								+String.format("%-15s",NumberFormat.getNumberInstance(new Locale("uk")).format(rs.getObject("ParameterValue",BigDecimal.class)))))
-									+"\n");
+						+String.format("%-25s",rs.getObject("ControlSerialNumber", String.class))
+						+String.format("%-15s",NumberFormat.getNumberInstance(new Locale("uk")).format(rs.getObject("ParameterValue",BigDecimal.class))))
+						+"\n");
 			}
-			System.out.println(sb.toString());
-			System.out.println("\n" +"Number of symbols in cache: "+sb.length());
+			if (sb.length()>0)System.out.println(sb.toString());
+			System.out.println("Quantity of symbols in cache: "+sb.length());
 		}catch (SQLException e) {
 			System.err.println("Err.Code: " + e.getErrorCode() + "Message: " + 
 					e.getMessage() + "SQL State: " +e.getSQLState());
@@ -69,20 +70,21 @@ public class Start {
 			}
 			rs=stmt.executeQuery();
 			rs.last();
-			System.out.println("Number of Rows: "+ rs.getRow());
-			rs.beforeFirst();
+			System.out.println("Number of the last row: "+ rs.getRow());
 			if (!(rs.getWarnings()==null)) System.out.println(rs.getWarnings().toString());
 			StringBuilder sb = new StringBuilder(100);
-			System.out.println(String.format("%-15s", "pDate")  +
+			if (rs.first())System.out.println(String.format("%-15s", "pDate")  +
 					String.format("%-25s",  "ControlSerialNumber") +
 					String.format("%-15s",   "ParameterValue"));
+			
+			rs.beforeFirst();
 			while (rs.next()){
 				sb.append((String.format("%-15s", DateFormat.getDateInstance(DateFormat.MEDIUM,Locale.ENGLISH).format(rs.getObject("pDate", Date.class)))
 						+String.format("%-25s",rs.getObject("ControlSerialNumber", String.class))
 						+String.format("%-15s",NumberFormat.getNumberInstance(new Locale("uk")).format( rs.getObject("ParameterValue",BigDecimal.class))))+"\n");
 			}
-			System.out.println(sb.toString());
-			System.out.println("\n" +"Number of symbols in cache: "+sb.length());
+			if (sb.length()>0) System.out.println(sb.toString());
+			System.out.println("Quantity of symbols in cache: "+sb.length());
 		}catch (SQLException e) {
 			System.err.println("Err.Code: " + e.getErrorCode() + "\nMessage: " + 
 					e.getMessage() + "\nSQL State: " +e.getSQLState());
