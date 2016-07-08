@@ -81,7 +81,7 @@ public class Start {
 			while (rs.next()){
 				sb.append((String.format("%-15s", DateFormat.getDateInstance(DateFormat.MEDIUM,Locale.ENGLISH).format(rs.getObject("pDate", Date.class)))
 						+String.format("%-25s",rs.getObject("ControlSerialNumber", String.class))
-						+String.format("%-15s",NumberFormat.getNumberInstance(new Locale("uk")).format( rs.getObject("ParameterValue",BigDecimal.class))))+"\n");
+						+String.format("%-d",NumberFormat.getNumberInstance(new Locale("uk")).format( rs.getObject("ParameterValue",BigDecimal.class))))+"\n");
 			}
 			if (sb.length()>0) System.out.println(sb.toString());
 			System.out.println("Quantity of symbols in cache: "+sb.length());
