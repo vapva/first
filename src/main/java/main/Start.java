@@ -14,9 +14,9 @@ public class Start {
 	private static final String QR1 = "SELECT * FROM tblWaterParameters LIMIT 0,100";
 	private static final String QR2 = "SELECT * FROM tblWaterParameters WHERE pDate<=?";	
 
-	public static void runDB() {
+	public void runDB() {
 		try(
-				Statement stmt = DbSingleton.getInstanse().getConnection().createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+				Statement stmt = DbSingleton.getInstance().getConnection().createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
 				ResultSet rs  = stmt.executeQuery(QR1);
 				){
 			rs.last();
@@ -43,23 +43,25 @@ public class Start {
 	}	
  
 	public static void main(String[] args) {
+		Start me = new Start();
 		System.out.println("Starting ..." + "\nQuerying first 100 records ...");
-		runDB();
+		me.runDB();
 		System.out.println("New Session");
-		runDBwithParameters();
-		if (!(DbUtils.DbSingleton.getInstanse().getConnection()==null)) try {
+		me.runDBwithParameters();
+		if (!(DbUtils.DbSingleton.getInstance().getConnection()==null)) try {
 			System.out.println("Closing DB ...");
-			DbUtils.DbSingleton.getInstanse().getConnection().close();
+			DbUtils.DbSingleton.getInstance().getConnection().close();
+			DbUtils.DbSingleton.getInstance().setConnection(null);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}
 
-	public static void runDBwithParameters(){
+	public void runDBwithParameters(){
 		ResultSet rs = null;
 		PreparedStatement stmt = null;
 		try{
-			stmt = DbSingleton.getInstanse().getConnection().prepareStatement(QR2, ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+			stmt = DbSingleton.getInstance().getConnection().prepareStatement(QR2, ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
 			System.out.println("Connection is successful");
 			try {
 				stmt.setDate(1, InputHelper.getSQLDate("Enter Date Parameter ..."));
@@ -105,7 +107,7 @@ public class Start {
 		PreparedStatement stmt=null;
 		
 		try {
-			stmt=DbUtils.DbSingleton.getInstanse().getConnection().prepareStatement(QR,ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+			stmt=DbSingleton.getInstance().getConnection().prepareStatement(QR,ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
 			stmt.setLong(1, i);
 			rs=stmt.executeQuery();
 			rs.last();
@@ -139,7 +141,7 @@ public class Start {
 		PreparedStatement stmt=null;
 		if (obj==null || !(obj instanceof WaterParam)) return false;
 		try {
-			stmt=DbUtils.DbSingleton.getInstanse().getConnection().prepareStatement(QR, Statement.RETURN_GENERATED_KEYS);
+			stmt=DbSingleton.getInstance().getConnection().prepareStatement(QR, Statement.RETURN_GENERATED_KEYS);
 			stmt.setDate(1, obj.getpDate());
 			stmt.setString(2, obj.getControlSerialNumber());
 			stmt.setDouble(3, obj.getParameterValue());

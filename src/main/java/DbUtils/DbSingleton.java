@@ -9,6 +9,11 @@ public class DbSingleton {
 	private static  Connection conn=null;
 	private static DbSingleton me=null;
 	
+	//just for fun!
+	static{
+		System.out.println("Static initilizer should run first!");
+	}
+	
 	private DbSingleton(){
 		try {
 			conn=DriverManager.getConnection(CONNECTION_STRING);
@@ -16,9 +21,11 @@ public class DbSingleton {
 			e.printStackTrace();
 		}
 	}
-	public static DbSingleton getInstanse(){
+	
+	public static DbSingleton getInstance(){
 		if (me==null){
 			me = new DbSingleton();
+			System.out.println("New Singleton's Instance is created");
 		}
 		return me;
 	}
@@ -32,5 +39,11 @@ public class DbSingleton {
 			}
 		}
 		return conn;
+	}
+	/**
+	 * @param conn the conn to set
+	 */
+	public void setConnection(Connection conn) {
+		DbSingleton.conn = conn;
 	}
 }
